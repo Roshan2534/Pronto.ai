@@ -1,16 +1,39 @@
-# This is a sample Python script.
+import subprocess
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def check_git_status():
+    directory = input("Please enter the local git directory path: ")
+    git_check = subprocess.run(['git','rev-parse','--is-inside-work-tree'], cwd = directory, capture_output=True)
+
+    if git_check.returncode != 0:
+        while git_check.returncode != 0:
+            print("You have entered a Invalid git repository directory! Please try again.")
+            directory = input("Please enter the local git directory path: ")
+            git_check = subprocess.run(['git', 'rev-parse', '--is-inside-work-tree'],  cwd = directory, capture_output=True)
+
+    git_status = subprocess.run(['git','status','--porcelain'], cwd=directory, capture_output=True)
+    git_branch = subprocess.run(['git','rev-parse','--abbrev-ref','HEAD'], cwd=directory,capture_output=True)
+    git_log = subprocess.run(['git','log','-1','--pretty=format:"%an"','--since="1 week ago"'], cwd=directory, capture_output=True)
+
+    print(f"Active branch: {git_branch.stdout.decode().strip()}")
+
+    file_status = False
+    if git_status.stdout:
+        file_status = True
+    print(f"local changes: {file_status}")
+
+    git_log_output = git_log.stdout.decode()
+
+    isRufus = False
+    if git_log_output.strip() == "Rufus":
+        isRufus = True
+    print(f"blame Rufus: {isRufus}")
+
+    isRecent = False
+    if git_log_output:
+        isRecent = True
+    print(f"Recent Commit: {isRecent}")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    check_git_status()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
