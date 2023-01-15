@@ -33,6 +33,15 @@ def check_git_status():
         isRecent = True
     print(f"Recent Commit: {isRecent}")
 
+    #git_fetch = subprocess.run(['git','fetch'],cwd = directory,capture_output=True)
+    git_diff = subprocess.run(['git','diff'], cwd=directory, capture_output=True)
+    remote_diff = git_diff.stdout.decode()
+
+    if remote_diff:
+        print("There are differences between the local and remote repositoy")
+    else:
+        print("The local and remote repository are in sync")
+
 
 if __name__ == '__main__':
     check_git_status()
