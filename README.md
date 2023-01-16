@@ -8,7 +8,7 @@
 <h4> You can install these libraries using pip3 install library_name command in your terminal</h4>
 
 <h3>How to use: </h3>
-<h4>1. Download the script and run it like any other python script </h4>
+<h4>1. Download the script and navigate to it using the terminal and run the command "python3 main.py" </h4>
 <h4>2. Select the git directory you want information on from the dialogue box that appears and you are done! </h4>
 <h4>3. The Script will then display the following information: Active branch, Local changes, Recent Commits, Last 5 commits, If there are any differences in local and remote repository </h4>
 
